@@ -4,5 +4,6 @@
     {
         public PlayerSettings PlayerSettings { get; set; }
         public SoundSettings SoundSettings { get; set; }
+        public BoardSettings BoardSettings { get; set; }
     }    
 }

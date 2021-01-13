@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using TurtleChallenge.Assets.Contracts.Boards;
 using TurtleChallenge.Assets.Contracts.Tiles;
+using TurtleChallenge.Assets.Implementation.Settings;
 using TurtleChallenge.Structs;
 
 namespace TurtleChallenge.Assets.Boards
 {
     public class DefaultBoard : IBoard
     {
+        public DefaultBoard() { }
+        
         public int Width { get; set; }
         public int Height { get; set; }
         public List<IEnemy> Enemies { get; set; }

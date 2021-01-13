@@ -6,5 +6,6 @@ namespace TurtleChallenge.Assets.Contracts.Settings
     {
         PlayerSettings PlayerSettings { get; set; }
         SoundSettings SoundSettings { get; set; }
+        BoardSettings BoardSettings { get; set; }
     }    
 }

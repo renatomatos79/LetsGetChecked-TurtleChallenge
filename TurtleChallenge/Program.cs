@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Linq;
 using TurtleChallenge.Assets.Boards;
 using TurtleChallenge.Assets.Contracts.GameEngine;
@@ -78,22 +79,22 @@ namespace TurtleChallenge
                     TurnFileName = System.IO.Path.Combine(System.Environment.CurrentDirectory, "Resources", "Sounds", "movement.wav"),
                     VictoryFileName = System.IO.Path.Combine(System.Environment.CurrentDirectory, "Resources", "Sounds", "victory.wav"),
                     WrongMovementFileName = System.IO.Path.Combine(System.Environment.CurrentDirectory, "Resources", "Sounds", "wrong-movement.wav"),
-                }
-            };
-            
-            var board = new DefaultBoard
-            {
-                Width = 6,
-                Height = 6,
-                Exit = new BaseFlag { Position = new Structs.Position { X = 4, Y = 2 } },
-                Enemies = new System.Collections.Generic.List<IEnemy>
+                },
+                BoardSettings = new BoardSettings
                 {
-                    new BaseEnemy { Position = new Structs.Position { X = 0, Y = 1 } },
-                    new BaseEnemy { Position = new Structs.Position { X = 3, Y = 1 } },
-                    new BaseEnemy { Position = new Structs.Position { X = 3, Y = 3 } },
+                    Width = 6,
+                    Height = 6,
+                    Exit = new BaseFlag { Position = new Structs.Position { X = 4, Y = 2 } },
+                    Enemies = new System.Collections.Generic.List<IEnemy>
+                    {
+                        new BaseEnemy { Position = new Structs.Position { X = 0, Y = 1 } },
+                        new BaseEnemy { Position = new Structs.Position { X = 3, Y = 1 } },
+                        new BaseEnemy { Position = new Structs.Position { X = 3, Y = 3 } },
+                    }
                 }
             };
 
+            var board = MapperHelper.Mapper.Map<DefaultBoard>(defaultSettings.BoardSettings);
             var player = new Player(board);
             var defaultSound = new DefaultSound();
             var defaultEngine = new DefaultEngine(player, defaultSettings, defaultSound);
