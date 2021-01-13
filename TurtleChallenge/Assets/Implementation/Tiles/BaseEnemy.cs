@@ -6,7 +6,7 @@ namespace TurtleChallenge.Assets.Implementation.Tiles
     {
         public override string Icon()
         {
-            return "⦿";
+            return "B";
         }
     }
 }

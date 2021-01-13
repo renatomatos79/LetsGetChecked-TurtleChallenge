@@ -137,9 +137,9 @@ namespace TurtleChallenge.Assets.Implementation.GameEngine
             return null;
         }
 
-        public void Do(string action)
+        public void Do(EngineOperation action)
         {
-            if (action.ToUpper() == "P")
+            if (action == EngineOperation.Play)
             {
                 Play();
             }
@@ -149,11 +149,11 @@ namespace TurtleChallenge.Assets.Implementation.GameEngine
             }
             else
             { 
-                if (action.ToUpper() == "M")
+                if (action == EngineOperation.Move)
                 {
                     this.Player.Move();
                 }
-                if (action.ToUpper() == "T")
+                if (action == EngineOperation.Turn)
                 {
                     this.Player.Turn();
                 }

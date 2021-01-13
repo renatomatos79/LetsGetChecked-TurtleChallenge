@@ -7,6 +7,7 @@ using TurtleChallenge.Assets.Implementaation.Sounds;
 using TurtleChallenge.Assets.Implementation.GameEngine;
 using TurtleChallenge.Assets.Implementation.Settings;
 using TurtleChallenge.Assets.Implementation.Tiles;
+using TurtleChallenge.Helper;
 
 namespace TurtleChallenge
 {
@@ -101,8 +102,11 @@ namespace TurtleChallenge
             var opt = GetMenu(defaultEngine);
             while (opt != EXIT)
             {
-                defaultEngine.Do(opt);
-
+                var engineOperation = EngineOperationHelper.From(opt);
+                if (engineOperation.HasValue)
+                {
+                    defaultEngine.Do(engineOperation.Value);
+                }               
                 opt = GetMenu(defaultEngine);
             }
             

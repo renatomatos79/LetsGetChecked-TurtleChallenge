@@ -12,6 +12,6 @@ namespace TurtleChallenge.Assets.Contracts.GameEngine
         ISettings Settings { get; }
         void Notify(EngineEvent engineEvent);
         ITile Get(int x, int Y);
-        void Do(string action);
+        void Do(EngineOperation action);
     }
 }
