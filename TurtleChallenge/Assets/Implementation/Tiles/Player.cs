@@ -1,49 +1,54 @@
-﻿using TurtleChallenge.Assets.Contracts.Boards;
-using TurtleChallenge.Assets.Contracts.Enemies;
-using TurtleChallenge.Assets.Contracts.GameEngine;
-using TurtleChallenge.Assets.Contracts.Players;
+﻿using System;
+using TurtleChallenge.Assets.Contracts.Boards;
+using TurtleChallenge.Assets.Contracts.Tiles;
 using TurtleChallenge.Enums;
 using TurtleChallenge.Structs;
 
-namespace TurtleChallenge.Assets.Players
+namespace TurtleChallenge.Assets.Implementation.Tiles
 {
-    public class Player : IPlayer
+    public class Player : BaseTile, IPlayer
     {
-        private readonly IEngine engine;
-        public Player(IBoard board, IEngine engine)
+        private readonly IBoard board;
+        public Player(IBoard board)
         {
-            this.Board = board;
-            this.engine = engine;
+            this.board = board;
         }
         public Direction Direction { get; set; }
-        public Position Position { get; set; }
-        public IBoard Board { get; }
+        public Action<EngineEvent> OnChange { get; set; }
+
+        private void Change(EngineEvent engineEvent)
+        {
+            if (OnChange != null)
+            {
+                OnChange.Invoke(engineEvent);
+            }
+        }
 
         public IPlayer Move()
         {
             var nextMovement = NextMovement();
-            if (!Board.IsValid(nextMovement))
+            if (!board.IsValid(nextMovement))
             {
-                this.engine.Notify(EngineEvent.InvalidMovement);
+                Change(EngineEvent.InvalidMovement);
             }
             else
             {
                 this.Position = nextMovement;
-                var tile = Board.Colision(this.Position);
+                var tile = board.Colision(this.Position);
                 if (tile != null)
                 {
                     if (tile is IEnemy)
                     {
-                        this.engine.Notify(EngineEvent.GameOver);
+                        Change(EngineEvent.GameOver);
                     }
                     else 
                     {
-                        this.engine.Notify(EngineEvent.Victory);
+                        Change(EngineEvent.Victory);
                     }
                 }
                 else
                 {
-                    this.engine.Notify(EngineEvent.PlayerMovement);
+                    Change(EngineEvent.PlayerMovement);
                 }
             }
             return this;
@@ -74,7 +79,7 @@ namespace TurtleChallenge.Assets.Players
                         break;
                     }
             }
-            this.engine.Notify(EngineEvent.PlayerTurnAround);
+            this.Change(EngineEvent.PlayerTurnAround);
             return this;
         }
 

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TurtleChallenge.Assets.Contracts.Enemies;
-using TurtleChallenge.Assets.Contracts.Flags;
+using TurtleChallenge.Assets.Contracts.Tiles;
 using TurtleChallenge.Structs;
 
 namespace TurtleChallenge.Assets.Contracts.Boards

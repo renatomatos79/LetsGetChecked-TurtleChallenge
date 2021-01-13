@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TurtleChallenge.Assets.Sounds
+﻿namespace TurtleChallenge.Assets.Contracts.Sounds
 {
     public interface ISound
     {

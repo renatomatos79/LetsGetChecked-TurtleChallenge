@@ -1,14 +1,12 @@
-﻿using TurtleChallenge.Assets.Contracts.Boards;
-using TurtleChallenge.Assets.Contracts.Flags;
+﻿using System;
 using TurtleChallenge.Enums;
-using TurtleChallenge.Structs;
 
-namespace TurtleChallenge.Assets.Contracts.Players
+namespace TurtleChallenge.Assets.Contracts.Tiles
 {
     public interface IPlayer : ITile
     {
-        IBoard Board { get; }
         Direction Direction { get; set; }
+        Action<EngineEvent> OnChange { get; set; }
         IPlayer Turn();
         IPlayer Move();
     }

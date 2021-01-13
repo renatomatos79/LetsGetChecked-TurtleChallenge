@@ -7,7 +7,7 @@ namespace TurtleChallenge.Assets.Implementation.Settings
     {
         public bool Enabled { get; set; }
         public string WrongMovementFileName { get; set; }
-        public string MovementFileName { get; set; }
+        public string PlayMovementFileName { get; set; }
         public string TurnFileName { get; set; }
         public string GameOverFileName { get; set; }
         public string VictoryFileName { get; set; }
