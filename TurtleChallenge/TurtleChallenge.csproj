@@ -7,10 +7,14 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Windows.Extensions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resources\Settings\default.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Sounds\gameover.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

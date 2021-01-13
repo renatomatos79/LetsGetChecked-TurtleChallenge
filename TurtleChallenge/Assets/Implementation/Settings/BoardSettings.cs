@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using TurtleChallenge.Assets.Contracts.Tiles;
-using TurtleChallenge.Enums;
-using TurtleChallenge.Structs;
+using TurtleChallenge.Assets.Implementation.Tiles;
 
 namespace TurtleChallenge.Assets.Implementation.Settings
 {
@@ -9,7 +7,7 @@ namespace TurtleChallenge.Assets.Implementation.Settings
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public List<IEnemy> Enemies { get; set; }
-        public IFlag Exit { get; set; }
+        public List<BaseEnemy> Enemies { get; set; }
+        public BaseFlag Exit { get; set; }
     }
 }
