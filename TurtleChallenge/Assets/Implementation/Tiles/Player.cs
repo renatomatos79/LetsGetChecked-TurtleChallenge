@@ -8,13 +8,11 @@ namespace TurtleChallenge.Assets.Implementation.Tiles
 {
     public class Player : BaseTile, IPlayer
     {
-        private readonly IBoard board;
-        public Player(IBoard board)
-        {
-            this.board = board;
-        }
+        public Player(IBoard board) => this.Board = board;
+        
         public Direction Direction { get; set; }
         public Action<EngineEvent> OnChange { get; set; }
+        public IBoard Board { get; internal set; }
 
         private void Change(EngineEvent engineEvent)
         {
@@ -27,14 +25,14 @@ namespace TurtleChallenge.Assets.Implementation.Tiles
         public IPlayer Move()
         {
             var nextMovement = NextMovement();
-            if (!board.IsValid(nextMovement))
+            if (!Board.IsValid(nextMovement))
             {
                 Change(EngineEvent.InvalidMovement);
             }
             else
             {
                 this.Position = nextMovement;
-                var tile = board.Colision(this.Position);
+                var tile = Board.Colision(this.Position);
                 if (tile != null)
                 {
                     if (tile is IEnemy)
@@ -85,13 +83,13 @@ namespace TurtleChallenge.Assets.Implementation.Tiles
 
         private Position NextMovement()
         {
-            int x = 0;
-            int y = 0;
+            int x = this.Position.X;
+            int y = this.Position.Y;
             switch (this.Direction)
             {
                 case Direction.North:
                     {
-                        y++;
+                        y--;
                         break;
                     }
                 case Direction.East:
@@ -101,7 +99,7 @@ namespace TurtleChallenge.Assets.Implementation.Tiles
                     }
                 case Direction.South:
                     {
-                        y--;
+                        y++;
                         break;
                     }
                 case Direction.West:
@@ -111,6 +109,22 @@ namespace TurtleChallenge.Assets.Implementation.Tiles
                     }
             }
             return new Position { X = x, Y = y };
+        }
+
+        public override string Icon()
+        {
+            switch (this.Direction)
+            {
+                case Direction.North:
+                    return "↑";
+                case Direction.East:
+                    return ">";
+                case Direction.South:
+                    return "↓";
+                case Direction.West:
+                    return "<";
+            }
+            return string.Empty;
         }
     }
 }

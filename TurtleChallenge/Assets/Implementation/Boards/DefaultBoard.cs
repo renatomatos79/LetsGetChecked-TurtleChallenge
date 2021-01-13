@@ -16,7 +16,7 @@ namespace TurtleChallenge.Assets.Boards
         public IFlag Exit { get; set; }
         public ITile Colision(Position position)
         {
-            if (Exit.Equals(position))
+            if (Exit.Position.Equals(position))
             {
                 return Exit;
             }
@@ -33,8 +33,8 @@ namespace TurtleChallenge.Assets.Boards
 
         public bool IsValid(Position position)
         {
-            return (position.X >= 0 && position.X < (Width - 1)) &&
-                   (position.Y >= 0 && position.Y < (Height - 1));
+            return (position.X >= 0 && position.X <= (Width - 1)) &&
+                   (position.Y >= 0 && position.Y <= (Height - 1));
         }
     }
 }

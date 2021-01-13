@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using TurtleChallenge.Assets.Boards;
+using TurtleChallenge.Assets.Contracts.GameEngine;
 using TurtleChallenge.Assets.Contracts.Tiles;
 using TurtleChallenge.Assets.Implementaation.Sounds;
 using TurtleChallenge.Assets.Implementation.GameEngine;
@@ -14,35 +15,50 @@ namespace TurtleChallenge
         public static string EXIT = "X";
         public static string[] VALID_OPTIONS = new string[] { "T", "M", EXIT, "P" };
 
-        static string GetMenu()
+        static void Draw(IEngine engine)
+        {
+            Console.WriteLine($"Level: {engine.Level} ");
+            Console.WriteLine("==========================================");
+
+            if (!engine.Active)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Game Over");
+                Console.WriteLine("");
+            }
+            else
+            {
+                for (var y = 0; y < engine.Player.Board.Height; y++)
+                {
+                    for (var x = 0; x < engine.Player.Board.Width; x++)
+                    {
+                        Console.Write($"   {engine.Get(x, y)?.Icon() ?? " "}   |");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("------------------------------------------");
+                }
+            }
+            
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("");
+        }
+
+        static string GetMenu(IEngine engine)
         {
             Console.Clear();
+
+            Draw(engine);
+
             Console.WriteLine("T: Turn 90º");
             Console.WriteLine("M: Move");
             Console.WriteLine("X: Quit");
             Console.WriteLine("P: Play");
-            Console.Write("=> ");
+            Console.Write("=> ");            
+
             var opt = Console.ReadLine().Trim().ToUpper();
-            return VALID_OPTIONS.Contains(opt) ? opt : GetMenu();
-        }
-
-        static void Draw(DefaultBoard board)
-        {
-            Console.WriteLine("");
-            Console.WriteLine("==========================================");
-
-            for (var x = 0; x <= board.Width - 1; x++)
-            {
-                for (var y = 0; y <= board.Height - 1; y++)
-                {
-                    Console.Write("___ ");
-                }
-                Console.WriteLine();
-            }
-
-            Console.WriteLine("==========================================");
-            Console.WriteLine("");
-        }
+            return VALID_OPTIONS.Contains(opt) ? opt : GetMenu(engine);
+        }        
 
         static void Main(string[] args)
         {
@@ -63,10 +79,11 @@ namespace TurtleChallenge
                     WrongMovementFileName = System.IO.Path.Combine(System.Environment.CurrentDirectory, "Resources", "Sounds", "wrong-movement.wav"),
                 }
             };
+            
             var board = new DefaultBoard
             {
-                Width = 5,
-                Height = 4,
+                Width = 6,
+                Height = 6,
                 Exit = new BaseFlag { Position = new Structs.Position { X = 4, Y = 2 } },
                 Enemies = new System.Collections.Generic.List<IEnemy>
                 {
@@ -77,20 +94,19 @@ namespace TurtleChallenge
             };
 
             var player = new Player(board);
-
             var defaultSound = new DefaultSound();
-
             var defaultEngine = new DefaultEngine(player, defaultSettings, defaultSound);
+            defaultEngine.Notify(Enums.EngineEvent.Play);
 
-            var opt = GetMenu();
+            var opt = GetMenu(defaultEngine);
             while (opt != EXIT)
             {
-                Draw(board);
+                defaultEngine.Do(opt);
 
-                opt = GetMenu();
+                opt = GetMenu(defaultEngine);
             }
             
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("The end!");
         }
     }
 }

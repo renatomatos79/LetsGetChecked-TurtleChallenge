@@ -12,5 +12,10 @@
         {
             return obj != null && obj is Position && this.GetHashCode() == obj.GetHashCode();
         }
+
+        public bool Equals(int x, int y)
+        {
+            return this.X == x && this.Y == y;
+        }
     }
 }

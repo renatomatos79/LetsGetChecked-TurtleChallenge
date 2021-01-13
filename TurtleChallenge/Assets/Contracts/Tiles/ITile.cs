@@ -8,5 +8,6 @@ namespace TurtleChallenge.Assets.Contracts.Tiles
     public interface ITile
     {
         Position Position { get; set; }
+        string Icon();
     }
 }
